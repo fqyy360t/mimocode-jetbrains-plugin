@@ -1,0 +1,29 @@
+<idea-plugin>
+  <id>ai.mimo.plugin</id>
+  <name>MiMoCode</name>
+  <version>1.0.0</version>
+  <vendor url="https://mimo.xiaomi.com">Xiaomi MiMo Team</vendor>
+  <description><![CDATA[MiMoCode AI coding agent inside your JetBrains IDE.
+    Supports context from active file, cursor position, open tabs, and manual code selection.]]></description>
+  <idea-version since-build="253" until-build="253.*" />
+  <depends>com.intellij.modules.platform</depends>
+  <!-- Services -->
+  <extensions defaultExtensionNs="com.intellij">
+    <applicationService serviceImplementation="ai.mimo.plugin.server.ServerManager" />
+    <projectService serviceImplementation="ai.mimo.plugin.bridge.BrowserBridge" />
+    <projectService serviceImplementation="ai.mimo.plugin.bridge.IdeContextService" />
+    <toolWindow id="MiMoCode" anchor="right" icon="/icons/mimo.svg" factoryClass="ai.mimo.plugin.toolwindow.MiMoToolWindowFactory" />
+    <applicationConfigurable parentId="tools" id="ai.mimo.plugin.settings" instance="ai.mimo.plugin.settings.MiMoConfigurable" displayName="MiMoCode" />
+  </extensions>
+  <!-- Actions -->
+  <actions>
+    <action id="ai.mimo.AddToContext" class="ai.mimo.plugin.actions.AddToContextAction" text="Add to MiMoCode Context" description="Add selected code to the MiMoCode chat context">
+      <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="$Copy" />
+      <keyboard-shortcut keymap="$default" first-keystroke="control alt A" />
+    </action>
+    <action id="ai.mimo.OpenPanel" class="ai.mimo.plugin.actions.OpenPanelAction" text="Open MiMoCode" description="Open the MiMoCode chat panel">
+      <keyboard-shortcut keymap="$default" first-keystroke="control BACK_SLASH" />
+      <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta BACK_SLASH" />
+    </action>
+  </actions>
+</idea-plugin>
